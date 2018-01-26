@@ -1,0 +1,22 @@
+<level title="Тестовый уровень">
+	<chips>
+		<a type="blob" collapsable="true" movable="true"/>
+		<b type="tomato" collapsable="true" movable="true"/>
+		<c type="radish" collapsable="true" movable="true"/>
+		<d type="corn" collapsable="true" movable="true"/>
+		<e type="broccoli" collapsable="true" movable="true"/>
+		<f type="box" collapsable="true" movable="false"/>
+	</chips>
+	<!--
+		0 - невидимая ячейка
+		1 - обычная ячейка
+		2 - ячейка-эмиттер
+		3 - ячейка с песком
+	 -->
+	<grid cols="4" rows="4">
+		2d 2a 2c 2d
+		1a 3b 1a 1a
+		1c 1f 1f 1d
+		1e 1e 1d 1e
+	</grid>
+</level>
