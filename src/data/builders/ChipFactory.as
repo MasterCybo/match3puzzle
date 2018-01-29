@@ -3,9 +3,10 @@
  */
 package data.builders
 {
+	import collections.EnumChipType;
+	
 	import data.*;
 	import data.collections.ChipsPool;
-	import collections.EnumChipType;
 	
 	import ru.arslanov.core.enum.Enum;
 	

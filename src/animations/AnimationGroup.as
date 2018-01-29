@@ -7,7 +7,7 @@ package animations
 	
 	import aze.motion.EazeTween;
 	
-	import flash.events.EventDispatcher;
+	import starling.events.EventDispatcher;
 	
 	import views.BaseView;
 	

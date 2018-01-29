@@ -1,7 +1,6 @@
 package aze.motion.specials {
 	import aze.motion.EazeTween;
-	import aze.motion.specials.EazeSpecial;
-
+	
 	/**
 	 * Numeric tweening along a Bezier curve
 	 * @author Philippe / http://philippe.elsass.me

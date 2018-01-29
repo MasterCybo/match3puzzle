@@ -2,9 +2,9 @@ package ru.arslanov.flash.mvc.commands
 {
 	import flash.events.Event;
 	import flash.utils.Dictionary;
-
+	
 	import ru.arslanov.flash.mvc.Observer;
-
+	
 	/**
 	 * ...
 	 * @author Artem Arslanov

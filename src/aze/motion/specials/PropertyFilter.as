@@ -1,6 +1,7 @@
 package aze.motion.specials 
 {
 	import aze.motion.EazeTween;
+	
 	import flash.display.DisplayObject;
 	import flash.filters.BitmapFilter;
 	import flash.filters.BlurFilter;

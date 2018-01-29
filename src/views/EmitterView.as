@@ -3,26 +3,33 @@
  */
 package views
 {
-	import flash.display.Bitmap;
-	
-	import mach3.EmitterImage;
+	import starling.display.Image;
+	import starling.textures.Texture;
 	
 	public class EmitterView extends BaseView
 	{
-		private var _image:Bitmap;
+		private var _texture:Texture;
+		private var _image:Image;
 		
 		private var _pivotX:Number = 0;
 		private var _pivotY:Number = 0;
 		
-		public function EmitterView()
+		public function EmitterView(texture:Texture)
 		{
 			super();
-			_image = new Bitmap(new EmitterImage());
+			_texture = texture;
+		}
+		
+		override protected function initialize():void
+		{
+			super.initialize();
+			
+			_image = new Image(_texture);
 			addChild(_image);
 			
 			pivotX = int(_image.width / 2);
 		}
-		
+		/*
 		public function get pivotX():Number { return _pivotX; }
 		public function set pivotX(value:Number):void
 		{
@@ -44,5 +51,6 @@ package views
 			_image.x = -_pivotX;
 			_image.y = -_pivotY;
 		}
+		*/
 	}
 }

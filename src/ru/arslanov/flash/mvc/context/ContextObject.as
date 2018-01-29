@@ -4,7 +4,7 @@
 package ru.arslanov.flash.mvc.context
 {
 	import flash.events.Event;
-
+	
 	/**
 	 * ...
 	 * @author Artem Arslanov

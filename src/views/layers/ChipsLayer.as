@@ -5,8 +5,6 @@ package views.layers
 {
 	import animations.AnimationFactory;
 	
-	import events.ChipEvent;
-	
 	import flash.events.MouseEvent;
 	
 	import views.BaseView;
@@ -48,7 +46,7 @@ package views.layers
 						if(chipView.model.movable) {
 							AnimationFactory.me.makeSelection().addTarget(chipView).start();
 							chipView.parent.addChild(chipView);
-							chipView.startDrag();
+//							chipView.startDrag();
 						} else {
 							_isLocked = true;
 							AnimationFactory.me.makeLocked().addTarget(chipView).start();
@@ -59,8 +57,8 @@ package views.layers
 					case MouseEvent.MOUSE_UP:
 						AnimationFactory.me.makeDeselection().addTarget(chipView).start();
 //						if (!_isLocked) {
-							chipView.stopDrag();
-							chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
+//							chipView.stopDrag();
+//							chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
 //						}
 						_isLocked = false;
 						break;

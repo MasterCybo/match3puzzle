@@ -1,7 +1,7 @@
 package aze.motion.specials 
 {
 	import aze.motion.EazeTween;
-	import aze.motion.specials.EazeSpecial;
+	
 	import flash.media.SoundMixer;
 	import flash.media.SoundTransform;
 	

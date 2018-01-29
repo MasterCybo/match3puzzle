@@ -5,39 +5,38 @@ package views
 {
 	import data.Chip;
 	
-	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
+	
+	import starling.display.Image;
+	import starling.textures.Texture;
 	
 	public class ChipView extends BaseView
 	{
 		private var _chip:Chip;
-		private var _image:Bitmap;
+		private var _image:Image;
 		private var _pivotX:Number = 0;
 		private var _pivotY:Number = 0;
 		
 		private var _tf:TextField;
 		
-		public function ChipView(chip:Chip, image:Bitmap)
+		public function ChipView(chip:Chip, texture:Texture)
 		{
 			_chip = chip;
 			super();
 			
-			_image = image;
+			_image = new Image(texture);
 			addChild(_image);
 			
-			_tf = new TextField();
-			_tf.selectable = false;
-			_tf.mouseEnabled = false;
-			_tf.autoSize = TextFieldAutoSize.LEFT;
-			_tf.text = _chip.col + ":" + _chip.row;
-			addChild(_tf);
+//			_tf = new TextField();
+//			_tf.selectable = false;
+//			_tf.mouseEnabled = false;
+//			_tf.autoSize = TextFieldAutoSize.LEFT;
+//			_tf.text = _chip.col + ":" + _chip.row;
+//			addChild(_tf);
 			
 			pivotX = int(_image.width / 2);
 			pivotY = int(_image.height / 2);
-			
-			mouseEnabled = true;
 		}
 		
 		override protected function initialize():void
@@ -53,7 +52,7 @@ package views
 		}
 		
 		public function get model():Chip { return _chip; }
-		
+		/*
 		public function get pivotX():Number { return _pivotX; }
 		public function set pivotX(value:Number):void
 		{
@@ -80,14 +79,14 @@ package views
 		{
 			_tf.text = _chip.col + ":" + _chip.row;
 		}
-		
+		*/
 		public function debugCollapse():void
 		{
 			var bounds:Rectangle = getBounds(this);
-			graphics.lineStyle(1, 0xFF0000);
-			graphics.beginFill(0xFF0000, 0.5);
-			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-			graphics.endFill();
+//			graphics.lineStyle(1, 0xFF0000);
+//			graphics.beginFill(0xFF0000, 0.5);
+//			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+//			graphics.endFill();
 		}
 	}
 }

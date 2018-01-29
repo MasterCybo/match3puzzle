@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="cell_bg_01"	x="0"	y="0"	width="144"	height="144" frameX="-0" frameY="-0" frameWidth="144" frameHeight="144"/>
+	<SubTexture name="chip_01"	x="137"	y="693"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_02"	x="137"	y="556"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_03"	x="137"	y="419"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_04"	x="137"	y="282"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_05"	x="137"	y="145"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_06"	x="137"	y="830"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_07"	x="0"	y="693"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_08"	x="0"	y="556"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_09"	x="0"	y="830"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_10"	x="0"	y="282"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_11"	x="0"	y="419"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+	<SubTexture name="chip_12"	x="0"	y="145"	width="136"	height="136" frameX="-0" frameY="-0" frameWidth="136" frameHeight="136"/>
+</TextureAtlas>

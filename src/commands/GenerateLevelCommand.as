@@ -8,22 +8,22 @@ package commands
 	
 	import data.Cell;
 	import data.Chip;
-	
-	import data.builders.ChipFactory;
 	import data.Grid;
+	import data.builders.ChipFactory;
 	
 	import events.LevelEvent;
 	
 	import flash.events.Event;
 	
 	import ru.arslanov.core.enum.Enum;
-	import ru.arslanov.flash.mvc.commands.Command;
+	import ru.arslanov.starling.mvc.commands.Command;
+	import ru.arslanov.starling.mvc.context.IContext;
 	
 	public class GenerateLevelCommand extends Command
 	{
-		public function GenerateLevelCommand(event:Event)
+		public function GenerateLevelCommand(context:IContext, event:Event)
 		{
-			super(event);
+			super(context, event);
 		}
 		
 		override public function execute():void
@@ -33,7 +33,7 @@ package commands
 			var typeCells:Vector.<Enum> = Enum.getElementsList(EnumCellType);
 			var typeChips:Vector.<Enum> = Enum.getElementsList(EnumChipType);
 			
-			var grid:Grid = getInstance(Grid);
+			var grid:Grid = injector.getOf(Grid);
 			grid.initialize(9, 9);
 			
 			var cell:Cell;

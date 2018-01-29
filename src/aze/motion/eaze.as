@@ -13,6 +13,7 @@ package aze.motion {
 	import aze.motion.specials.PropertyShortRotation;
 	import aze.motion.specials.PropertyTint;
 	import aze.motion.specials.PropertyVolume;
+	
 	/**
 	 * Select a target for tweening. Target can be single object or Array/Vector. 
 	 */

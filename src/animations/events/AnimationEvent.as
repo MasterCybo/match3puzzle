@@ -3,18 +3,13 @@
  */
 package animations.events
 {
-	import flash.events.Event;
+	import starling.events.Event;
 	
 	public class AnimationEvent extends Event
 	{
-		public function AnimationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
+		public function AnimationEvent(type:String, bubbles:Boolean = true, data:Object = null)
 		{
-			super(type, bubbles, cancelable);
-		}
-		
-		override public function clone():Event
-		{
-			return new AnimationEvent(type, bubbles, cancelable);
+			super(type, bubbles, data);
 		}
 	}
 }

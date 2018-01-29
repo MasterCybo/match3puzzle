@@ -3,23 +3,20 @@
  */
 package mediators
 {
-	import flash.display.DisplayObject;
-	import flash.events.MouseEvent;
-	
-	import ru.arslanov.flash.mvc.context.IContextModule;
-	import ru.arslanov.flash.mvc.mediators.Mediator;
+	import ru.arslanov.starling.mvc.context.Context;
+	import ru.arslanov.starling.mvc.mediators.Mediator;
 	
 	import views.ChipView;
 	
 	public class ChipViewMediator extends Mediator
 	{
 		
-		public function ChipViewMediator(context:IContextModule)
+		public function ChipViewMediator(context:Context)
 		{
 			super(context);
 		}
 		
-		override public function initialize(displayObject:DisplayObject):void
+		override public function initialize(displayObject:Object):void
 		{
 			super.initialize(displayObject);
 			

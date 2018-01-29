@@ -1,7 +1,7 @@
 package ru.arslanov.flash.mvc
 {
 	import flash.events.EventDispatcher;
-
+	
 	/**
 	 * ...
 	 * @author Artem Arslanov

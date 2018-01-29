@@ -3,8 +3,6 @@
  */
 package mediators
 {
-	import animations.events.AnimationEvent;
-	
 	import data.Chip;
 	import data.GameData;
 	import data.Grid;
@@ -12,11 +10,10 @@ package mediators
 	import events.ChipEvent;
 	import events.LevelEvent;
 	
-	import flash.display.DisplayObject;
-	import flash.events.Event;
+	import ru.arslanov.starling.mvc.context.IContext;
+	import ru.arslanov.starling.mvc.mediators.Mediator;
 	
-	import ru.arslanov.flash.mvc.context.IContextModule;
-	import ru.arslanov.flash.mvc.mediators.Mediator;
+	import starling.events.Event;
 	
 	import utils.MatchAwardCalculator;
 	import utils.MoveChipCondition;
@@ -28,32 +25,34 @@ package mediators
 	{
 		private var _grid:Grid;
 		
-		public function GridViewMediator(context:IContextModule)
+		public function GridViewMediator(context:IContext)
 		{
 			super(context);
 		}
 		
-		override public function initialize(displayObject:DisplayObject):void
+		override public function initialize(displayObject:Object):void
 		{
 			super.initialize(displayObject);
 			
-			_grid = getInstance(Grid);
+			_grid = injector.getOf(Grid);
 			
-			addEventListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
+			addContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
 			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
+			
+			onLevelCreated();
 		}
 		
 		override public function destroy():void
 		{
 			view.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
-			removeEventListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
+			removeContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
 			removeViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			super.destroy();
 		}
 		
 		private function get view():GridView { return getView() as GridView; }
 		
-		private function onLevelCreated(event:LevelEvent):void
+		private function onLevelCreated(event:LevelEvent = null):void
 		{
 			view.removeAll();
 			view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
@@ -79,13 +78,13 @@ package mediators
 			} else {
 				if (dropChip && dropChip != dragChip) view.cancelMove(dropChip);
 			}
-//			view.updatePositionChips(Vector.<Chip>([dragChip]));
+			view.updatePositionChips(Vector.<Chip>([dragChip]));
 		}
 		
 		private function onFinishAnimation(event:Event):void
 		{
 			trace("*execute* GridViewMediator::onFinishAnimation()");
-//			view.stage.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+			view.stage.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
 			findAndRemoveMatches();
 		}
 		
@@ -107,7 +106,7 @@ package mediators
 				award += MatchAwardCalculator.calculateAward(chips);
 			}
 			
-			var gameData:GameData = getInstance(GameData);
+			var gameData:GameData = injector.getOf(GameData);
 			gameData.score += award;
 			trace("Score : " + gameData.score);
 		}

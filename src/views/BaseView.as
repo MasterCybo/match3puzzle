@@ -3,15 +3,15 @@
  */
 package views
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import starling.display.Sprite;
+	import starling.events.Event;
 	
 	public class BaseView extends Sprite
 	{
 		public function BaseView()
 		{
 			super();
-			mouseEnabled = false;
+			touchable = false;
 			stage ? initialize() : addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -24,6 +24,8 @@ package views
 		
 		private function onRemoveFromStage(event:Event):void
 		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 			dispose();
 		}
 		
@@ -32,10 +34,8 @@ package views
 			// override me
 		}
 		
-		public function dispose():void
+		override public function dispose():void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 			// override me
 		}
 	}

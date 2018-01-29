@@ -3,8 +3,9 @@
  */
 package data
 {
-	import data.collections.ChipsPool;
 	import collections.EnumChipType;
+	
+	import data.collections.ChipsPool;
 	
 	public class Chip
 	{

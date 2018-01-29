@@ -3,9 +3,9 @@
  */
 package data.builders
 {
-	import data.*;
 	import collections.EnumCellType;
 	
+	import data.*;
 	import data.collections.CellsPool;
 	
 	public class CellFactory

@@ -4,6 +4,7 @@
 package animations.anims
 {
 	import animations.*;
+	
 	import aze.motion.EazeTween;
 	import aze.motion.easing.Cubic;
 	

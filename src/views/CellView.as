@@ -5,38 +5,48 @@ package views
 {
 	import data.Cell;
 	
-	import flash.display.Bitmap;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
+	import starling.display.Image;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
+	import starling.textures.Texture;
 	
 	public class CellView extends BaseView
 	{
 		private var _cell:Cell;
-		private var _dirty:Bitmap;
+		private var _imageTexture:Texture;
+		private var _dirtyTexture:Texture;
+		private var _image:Image;
+		private var _dirty:Image;
 		private var _offsetCenterX:Number = 0;
 		private var _offsetCenterY:Number = 0;
 		
 		private var _tf:TextField;
 		
-		public function CellView(cell:Cell, image:Bitmap, dirtyImage:Bitmap = null)
+		public function CellView(cell:Cell, image:Texture, dirtyImage:Texture = null)
 		{
-			_cell = cell;
 			super();
 			
-			addChild(image);
-
-			if (dirtyImage) {
-				_dirty = dirtyImage;
+			_cell = cell;
+			_imageTexture = image;
+			_dirtyTexture = dirtyImage;
+		}
+		
+		override protected function initialize():void
+		{
+			super.initialize();
+			
+			addChild(_image = new Image(_imageTexture));
+			
+			if (_dirtyTexture) {
+				_dirty = new Image(_dirtyTexture);
 				addChild(_dirty);
 			}
 			
-			_offsetCenterX = int(image.width / 2);
-			_offsetCenterY = int(image.height / 2);
+			_offsetCenterX = int(_image.width / 2);
+			_offsetCenterY = int(_image.height / 2);
 			
-			_tf = new TextField();
-			_tf.selectable = false;
-			_tf.mouseEnabled = false;
-			_tf.autoSize = TextFieldAutoSize.LEFT;
+			_tf = new TextField(10, 10, "");
+			_tf.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			addChild(_tf);
 		}
 		
@@ -57,13 +67,12 @@ package views
 		
 		public function clearDirty():void
 		{
-			if (!_dirty) return;
-			removeChild(_dirty);
+			if (_dirty) removeChild(_dirty);
 		}
 		
 		public function updateDebug(col:uint, row:uint):void
 		{
-			_tf.text = col + ":" + row;
+			if (_tf) _tf.text = col + ":" + row;
 		}
 	}
 }

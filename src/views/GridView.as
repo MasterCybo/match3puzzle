@@ -15,9 +15,9 @@ package views
 	import data.Chip;
 	import data.Grid;
 	
-	import flash.events.Event;
-	
 	import flash.utils.Dictionary;
+	
+	import starling.events.Event;
 	
 	import views.layers.ChipsLayer;
 	
@@ -46,6 +46,19 @@ package views
 			addChild(_emittersLayer);
 		}
 		
+		override protected function initialize():void
+		{
+			super.initialize();
+			
+//			_cellsLayer = new BaseView();
+//			_chipsLayer = new ChipsLayer();
+//			_emittersLayer = new BaseView();
+//
+//			addChild(_cellsLayer);
+//			addChild(_chipsLayer);
+//			addChild(_emittersLayer);
+		}
+		
 		override public function dispose():void
 		{
 			stage.removeEventListener(FINISH_COLLAPSE, onFinishCollapse);
@@ -56,9 +69,9 @@ package views
 		
 		public function removeAll():void
 		{
-			_cellsLayer.removeChildren();
-			_chipsLayer.removeChildren();
-			_emittersLayer.removeChildren();
+			if (_cellsLayer) _cellsLayer.removeChildren();
+			if (_chipsLayer) _chipsLayer.removeChildren();
+			if (_emittersLayer) _emittersLayer.removeChildren();
 		}
 		
 		public function getColumn(localX:Number):int { return localX / Dimension.CELL_WIDTH; }
@@ -88,10 +101,10 @@ package views
 							_cells[cell] = cellView;
 							
 							if (cell.type == EnumCellType.CELL_EMITTER) {
-								var emitterView:EmitterView = new EmitterView();
-								emitterView.x = cellView.centerX;
-								emitterView.y = cellView.y;
-								_emittersLayer.addChild(emitterView);
+//								var emitterView:EmitterView = new EmitterView();
+//								emitterView.x = cellView.centerX;
+//								emitterView.y = cellView.y;
+//								_emittersLayer.addChild(emitterView);
 							}
 						}
 					}
@@ -116,7 +129,7 @@ package views
 		private function onFinishAnimation(event:AnimationEvent):void
 		{
 			event.target.removeEventListener(FINISH_ANIMATION, onFinishAnimation);
-			dispatchEvent(new Event(FINISH_ANIMATION));
+			dispatchEvent(new Event(FINISH_ANIMATION, true));
 		}
 		
 		public function removeChip(chip:Chip):void
@@ -138,7 +151,7 @@ package views
 			var animProps:AnimationProperty = animation.getProperty();
 			if (!chips) {
 				for each (chipView in _chips) {
-					chipView.debugUpdate();
+//					chipView.debugUpdate();
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
 					animProps.setPosition(cellView.centerX, cellView.centerY);
@@ -149,7 +162,7 @@ package views
 				for (var i:int = 0; i < chips.length; i++) {
 					chip = chips[i];
 					chipView = getChip(chip);
-					chipView.debugUpdate();
+//					chipView.debugUpdate();
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
 					if (chipView.x != cellView.centerX || chipView.y != cellView.centerY) {

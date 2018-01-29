@@ -5,7 +5,9 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	
-	[SWF(backgroundColor="#01568C", frameRate="60", width="1024", height="640")]
+	import ru.arslanov.starling.StarlingManager;
+	
+	[SWF(backgroundColor="#FFFFFF", frameRate="60", width="640", height="1136")]
 	public class Main extends Sprite
 	{
 		public function Main()
@@ -13,8 +15,10 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			
-			var matchGame:AppMatchPuzzle = new AppMatchPuzzle();
-			addChild(matchGame);
+			StarlingManager.create(StarlingRoot, stage);
+			
+//			var matchGame:AppMatchPuzzle = new AppMatchPuzzle();
+//			addChild(matchGame);
 		}
 	}
 }

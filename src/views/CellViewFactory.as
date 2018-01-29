@@ -5,10 +5,7 @@ package views
 {
 	import data.Cell;
 	
-	import flash.display.Bitmap;
-	
-	import mach3.CellImage;
-	import mach3.DirtyImage;
+	import utils.Assets;
 	
 	public class CellViewFactory
 	{
@@ -18,10 +15,7 @@ package views
 		
 		public static function createCellView(cell:Cell):CellView
 		{
-			var image:Bitmap = new Bitmap(new CellImage());
-			var dirty:Bitmap;
-			if (cell.dirty) dirty = new Bitmap(new DirtyImage());
-			var view:CellView = new CellView(cell, image, dirty);
+			var view:CellView = new CellView(cell, Assets.me.getTexture("cell_bg_01"), null);
 			return view;
 		}
 	}

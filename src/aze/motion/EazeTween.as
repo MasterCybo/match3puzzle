@@ -8,6 +8,7 @@ package aze.motion {
 	import aze.motion.easing.Linear;
 	import aze.motion.easing.Quadratic;
 	import aze.motion.specials.EazeSpecial;
+	
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.filters.ColorMatrixFilter;
@@ -813,6 +814,7 @@ package aze.motion {
 }
 
 import aze.motion.EazeTween;
+
 /**
  * Tweened propertie infos (chained list)
  */

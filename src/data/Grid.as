@@ -6,12 +6,8 @@ package data
 	import collections.EnumCellType;
 	
 	import data.builders.CellFactory;
-	
 	import data.builders.ChipFactory;
 	
-	import utils.AdvMatchFinder;
-	
-	import utils.MatchChipsCondition;
 	import utils.SimpleMatchFinder;
 	
 	public class Grid

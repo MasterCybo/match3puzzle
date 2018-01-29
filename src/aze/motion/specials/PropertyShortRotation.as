@@ -1,7 +1,6 @@
 package aze.motion.specials 
 {
 	import aze.motion.EazeTween;
-	import aze.motion.specials.EazeSpecial;
 	
 	/**
 	 * Short rotation tweening

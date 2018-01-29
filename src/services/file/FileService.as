@@ -3,23 +3,20 @@
  */
 package services.file
 {
-	import flash.events.FileListEvent;
-	
-	import ru.arslanov.flash.mvc.context.ContextObject;
-	import ru.arslanov.flash.mvc.context.IContextModule;
+	import flash.events.EventDispatcher;
 	
 	import services.file.events.FileServiceEvent;
 	
 	import utils.load.FileLoader;
 	import utils.load.events.LoaderEvent;
 	
-	public class FileService extends ContextObject
+	public class FileService extends EventDispatcher
 	{
 		private var _loader:FileLoader = new FileLoader();
 		
-		public function FileService(contextModule:IContextModule)
+		public function FileService()
 		{
-			super(contextModule);
+			super();
 		}
 		
 		public function get data():* { return _loader.data; }

@@ -6,12 +6,11 @@ package ru.arslanov.flash.mvc.context
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.Event;
-
+	
 	import ru.arslanov.flash.mvc.Repository;
 	import ru.arslanov.flash.mvc.commands.Commander;
 	import ru.arslanov.flash.mvc.mediators.MediatorMap;
-
-
+	
 	/**
 	 * ...
 	 * @author Artem Arslanov
