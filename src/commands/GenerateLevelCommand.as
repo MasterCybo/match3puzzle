@@ -34,12 +34,12 @@ package commands
 			var typeChips:Vector.<Enum> = Enum.getElementsList(EnumChipType);
 			
 			var grid:Grid = injector.getOf(Grid);
-			grid.initialize(9, 9);
+			grid.initialize(5, 5);
 			
 			var cell:Cell;
 			var chip:Chip;
-			for (var row:int = 0; row < 9; row++) {
-				for (var col:int = 0; col < 9; col++) {
+			for (var row:int = 0; row < grid.numRows; row++) {
+				for (var col:int = 0; col < grid.numCols; col++) {
 					cell = grid.getCell(col, row);
 					var indexCellType:uint = int(1 + Math.random() * (typeCells.length - 2));
 					cell.type = typeCells[indexCellType] as EnumCellType;

@@ -35,13 +35,13 @@ package
 			
 			_context = new Context()
 					.install(FeathersBundle)
-					.configure(ModelsConfig,
+					.configure(
+							ModelsConfig,
 							ServicesConfig,
 							CommandsConfig,
 							MediatorsConfig,
-							gameScreen);
-			
-			
+							gameScreen
+					);
 		}
 		
 	}

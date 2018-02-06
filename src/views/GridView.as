@@ -18,6 +18,9 @@ package views
 	import flash.utils.Dictionary;
 	
 	import starling.events.Event;
+	import starling.textures.Texture;
+	
+	import utils.Assets;
 	
 	import views.layers.ChipsLayer;
 	
@@ -93,9 +96,10 @@ package views
 					if (cell.type != EnumCellType.CELL_INVISIBLE) {
 						cellView = getCell(cell);
 						if (!cellView) {
-							cellView = CellViewFactory.createCellView(cell);
-							cellView.x = col * Dimension.CELL_WIDTH;
-							cellView.y = row * Dimension.CELL_HEIGHT;
+							var texture:Texture = Assets.me.getTexture("cell_bg");
+							cellView = new CellView(cell, texture, null);
+							cellView.x = col * texture.width;
+							cellView.y = row * texture.height;
 							cellView.updateDebug(col, row);
 							_cellsLayer.addChild(cellView);
 							_cells[cell] = cellView;
@@ -107,18 +111,18 @@ package views
 //								_emittersLayer.addChild(emitterView);
 							}
 						}
-					}
-					
-					chip = grid.getChip(col, row);
-					if (chip) {
-						chipView = getChip(chip);
-						if (!chipView) {
-							chipView = ChipViewFactory.createChipView(chip);
-							chipView.x = cellView.centerX;
-							chipView.y = cellView.centerY;
-							_chipsLayer.addChild(chipView);
-							_chips[chip] = chipView;
-							animation.addTarget(chipView);
+						
+						chip = grid.getChip(col, row);
+						if (chip) {
+							chipView = getChip(chip);
+							if (!chipView) {
+								chipView = new ChipView(chip, Assets.me.getTexture(chip.type.value));
+								chipView.x = cellView.centerX;
+								chipView.y = cellView.centerY;
+								_chipsLayer.addChild(chipView);
+								_chips[chip] = chipView;
+								animation.addTarget(chipView);
+							}
 						}
 					}
 				}

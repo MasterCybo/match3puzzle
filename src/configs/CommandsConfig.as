@@ -23,8 +23,8 @@ package configs
 			super.configure();
 			
 			commandMap.map(GameFieldEvent.GENERATE).toCommand(GenerateLevelCommand);
-			commandMap.map(FileServiceEvent.START_LOADING).toCommand(LoadLevelCommand);
-			commandMap.map(FileServiceEvent.LOAD_COMPLETE).toCommand(ParseLevelCommand);
+//			commandMap.map(FileServiceEvent.START_LOADING).toCommand(LoadLevelCommand);
+//			commandMap.map(FileServiceEvent.LOAD_COMPLETE).toCommand(ParseLevelCommand);
 		}
 	}
 }
