@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="debug_match3">
     <configurations>
-      <configuration name="debug_match3" target-platform="Desktop" pure-as="true" main-class="Main" output-file="GameMatch3Puzzle.swf" output-folder="$MODULE_DIR$/out/production/GameMatch3Puzzle">
+      <configuration name="debug_match3" target-platform="Mobile" pure-as="true" main-class="Main" output-file="GameMatch3Puzzle.swf" output-folder="$MODULE_DIR$/out/production/GameMatch3Puzzle">
         <dependencies>
           <entries>
             <entry library-name="lib" library-level="project">
@@ -12,13 +12,9 @@
           <sdk name="AIR_28c" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/match3-app.xml" package-file-name="GameMatch3Puzzle">
-          <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/res" path-in-package="res" />
-          </files-to-package>
-        </packaging-air-desktop>
-        <packaging-android />
-        <packaging-ios />
+        <packaging-air-desktop />
+        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/match3-app.xml" package-file-name="debug_match3" />
+        <packaging-ios package-file-name="debug_match3" />
       </configuration>
     </configurations>
     <compiler-options />
