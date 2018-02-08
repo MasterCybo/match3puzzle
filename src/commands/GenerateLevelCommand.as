@@ -19,6 +19,8 @@ package commands
 	import ru.arslanov.starling.mvc.commands.Command;
 	import ru.arslanov.starling.mvc.context.IContext;
 	
+	import utils.RndEnumType;
+	
 	public class GenerateLevelCommand extends Command
 	{
 		public function GenerateLevelCommand(context:IContext, event:Event)
@@ -30,8 +32,6 @@ package commands
 		{
 			super.execute();
 			
-			var typeChips:Vector.<Enum> = Enum.getElementsList(EnumChipType);
-			
 			var grid:Grid = injector.getOf(Grid);
 			grid.initialize(5, 5);
 			
@@ -41,8 +41,7 @@ package commands
 				for (var col:int = 0; col < grid.numCols; col++) {
 					cell = grid.getCell(col, row);
 					cell.type = EnumCellType.CELL_NORMAL;
-					var indexChipType:uint = int(Math.random() * (typeChips.length - 1));
-					chip = ChipFactory.createChip(typeChips[indexChipType] as EnumChipType);
+					chip = ChipFactory.createChip(RndEnumType.getRandom(EnumChipType));
 					chip.col = col;
 					chip.row = row;
 					grid.addChip(chip);
