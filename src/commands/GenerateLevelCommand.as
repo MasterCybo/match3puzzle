@@ -15,11 +15,10 @@ package commands
 	
 	import flash.events.Event;
 	
-	import ru.arslanov.core.enum.Enum;
 	import ru.arslanov.starling.mvc.commands.Command;
 	import ru.arslanov.starling.mvc.context.IContext;
 	
-	import utils.RndEnumType;
+	import utils.RandomEnum;
 	
 	public class GenerateLevelCommand extends Command
 	{
@@ -41,7 +40,7 @@ package commands
 				for (var col:int = 0; col < grid.numCols; col++) {
 					cell = grid.getCell(col, row);
 					cell.type = EnumCellType.CELL_NORMAL;
-					chip = ChipFactory.createChip(RndEnumType.getRandom(EnumChipType));
+					chip = ChipFactory.createChip(RandomEnum.getRandom(EnumChipType));
 					chip.col = col;
 					chip.row = row;
 					grid.addChip(chip);

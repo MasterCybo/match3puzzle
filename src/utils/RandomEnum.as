@@ -2,7 +2,7 @@ package utils
 {
 	import ru.arslanov.core.enum.Enum;
 	
-	public class RndEnumType
+	public class RandomEnum
 	{
 		public static function getRandom(enum:Class, from:int = 0, to:int = int.MAX_VALUE):*
 		{
