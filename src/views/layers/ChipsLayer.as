@@ -57,11 +57,12 @@ package views.layers
 				case TouchPhase.MOVED:
 					chipView.x = touch.globalX - _offsetX;
 					chipView.y = touch.globalY - _offsetY;
+					chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
 					break;
 				case TouchPhase.ENDED:
 					AnimationFactory.me.makeDeselection().addTarget(chipView).start();
 					if (!_isLocked) {
-						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
+						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_DROPPED, true));
 					}
 					_isLocked = false;
 					break;

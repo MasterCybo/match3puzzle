@@ -37,6 +37,7 @@ package mediators
 			_grid = injector.getOf(Grid);
 			
 			addContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
+			addViewListener(ChipEvent.CHIP_DROPPED, onChipDropped);
 			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			
 			onLevelCreated();
@@ -46,6 +47,7 @@ package mediators
 		{
 			view.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
 			removeContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
+			removeViewListener(ChipEvent.CHIP_DROPPED, onChipDropped);
 			removeViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			super.destroy();
 		}
@@ -61,6 +63,20 @@ package mediators
 			view.y = int((view.stage.height - view.height) / 2);
 		}
 		
+		private function onChipDropped(event:ChipEvent):void
+		{
+			var dragChipView:ChipView = event.target as ChipView;
+			var dragChip:Chip = dragChipView.model;
+			
+			if (MoveChipCondition.checkMove(dragChip, dragChip.col, dragChip.row)) {
+				view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+				view.updatePositionChips(Vector.<Chip>([dragChipView.model]));
+			} else {
+				view.cancelMove(dragChip);
+//				view.updatePositionChips(Vector.<Chip>([dragChip]));
+			}
+		}
+		
 		private function onChipMoved(event:ChipEvent):void
 		{
 			var dragChipView:ChipView = event.target as ChipView;
@@ -70,15 +86,18 @@ package mediators
 			var newRow:int = view.getRow(dragChipView.y);
 			
 			var pushedChip:Chip = _grid.getChip(newCol, newRow);
+			var chips:Vector.<Chip>;
 			
 			if (MoveChipCondition.checkMove(dragChip, newCol, newRow)) {
 				_grid.makeSwap(dragChip.col, dragChip.row, newCol, newRow);
 				view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
-				view.updatePositionChips(Vector.<Chip>([dragChip, pushedChip]));
+				view.updatePositionChips(Vector.<Chip>([pushedChip]));
+//				chips = Vector.<Chip>([pushedChip]);
 			} else {
-				if (pushedChip && pushedChip != dragChip) view.cancelMove(pushedChip);
+//				if (pushedChip && pushedChip != dragChip) view.cancelMove(pushedChip);
+//				chips = Vector.<Chip>([dragChip]);
 			}
-			view.updatePositionChips(Vector.<Chip>([dragChip]));
+//			view.updatePositionChips(chips);
 		}
 		
 		private function onFinishAnimation(event:Event):void

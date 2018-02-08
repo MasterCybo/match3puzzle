@@ -152,8 +152,8 @@ package views
 //					chipView.debugUpdate();
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
-					animProps.setPosition(cellView.centerX, cellView.centerY);
-					animation.addTarget(chipView, animProps);
+//					animProps.setPosition(cellView.centerX, cellView.centerY);
+//					animation.addTarget(chipView, animProps);
 				}
 			} else {
 				var chip:Chip;
