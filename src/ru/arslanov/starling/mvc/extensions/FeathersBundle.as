@@ -17,26 +17,31 @@ package ru.arslanov.starling.mvc.extensions
 			trace("Feathers VERSION : " + FEATHERS_VERSION);
 		}
 		
-		override protected function onAdded(event:Event):void
+		override protected function viewStageHandler(event:Event):void
 		{
-			var displayObject:DisplayObject = event.target as DisplayObject;
-			var feathersControl:FeathersControl = displayObject as FeathersControl;
-			if (!feathersControl) {
-				super.onAdded(event);
-			} else {
-				if (feathersControl.isInitialized) {
-					super.onAdded(event);
-				} else {
-					feathersControl.addEventListener(FeathersEventType.INITIALIZE, onFeathersControlInitialized);
-				}
+			switch (event.type) {
+				case Event.ADDED_TO_STAGE:
+					var displayObject:DisplayObject = event.target as DisplayObject;
+					var feathersControl:FeathersControl = displayObject as FeathersControl;
+					if (!feathersControl) {
+						super.viewStageHandler(event);
+					} else {
+						if (feathersControl.isInitialized) {
+							super.viewStageHandler(event);
+						} else {
+							feathersControl.addEventListener(FeathersEventType.INITIALIZE, onFeathersControlInitialized);
+						}
+					}
+					break;
 			}
+			
 		}
 		
 		private function onFeathersControlInitialized(event:Event):void
 		{
 			var feathersControl:FeathersControl = event.target as FeathersControl;
 			feathersControl.removeEventListener(FeathersEventType.INITIALIZE, onFeathersControlInitialized);
-			super.onAdded(event);
+			super.viewStageHandler(event);
 		}
 	}
 }

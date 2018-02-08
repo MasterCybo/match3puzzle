@@ -41,21 +41,59 @@ package ru.arslanov.starling.mvc.extensions
 		private function addedToStageHandler(event:Event = null):void
 		{
 			_contextView.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
-			_contextView.stage.addEventListener(Event.ADDED, onAdded);
-			_contextView.stage.addEventListener(Event.REMOVED, onRemoved);
+			_contextView.stage.addEventListener(Event.ADDED, contextStageHandler);
+			_contextView.stage.addEventListener(Event.REMOVED, contextStageHandler);
 			mediateView(_contextView);
 		}
 		
+		protected function contextStageHandler(event:Event):void
+		{
+			switch (event.type){
+				case Event.ADDED:
+					event.target.addEventListener(Event.ADDED_TO_STAGE, viewStageHandler);
+					break;
+				case Event.REMOVED:
+					event.target.addEventListener(Event.REMOVED_FROM_STAGE, viewStageHandler);
+					break;
+			}
+		}
+		
+		protected function viewStageHandler(event:Event):void
+		{
+			switch (event.type){
+				case Event.ADDED_TO_STAGE:
+					event.target.removeEventListener(Event.ADDED_TO_STAGE, viewStageHandler);
+					mediateView(event.target as DisplayObject);
+					break;
+				case Event.REMOVED_FROM_STAGE:
+					event.target.removeEventListener(Event.REMOVED_FROM_STAGE, viewStageHandler);
+					unmediateView(event.target as DisplayObject);
+					break;
+			}
+		}
+		/*
 		protected function onAdded(event:Event):void
 		{
+			event.target.addEventListener(Event.ADDED_TO_STAGE, addedViewToStageHandler);
+		}
+		
+		private function addedViewToStageHandler(event:Event):void
+		{
+			event.target.removeEventListener(Event.ADDED_TO_STAGE, addedViewToStageHandler);
 			mediateView(event.target as DisplayObject);
 		}
 		
 		protected function onRemoved(event:Event):void
 		{
-			unmediateView(event.target as DisplayObject);
+			event.target.addEventListener(Event.REMOVED_FROM_STAGE, removedViewFromStageHandler);
 		}
 		
+		private function removedViewFromStageHandler(event:Event):void
+		{
+			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, removedViewFromStageHandler);
+			unmediateView(event.target as DisplayObject);
+		}
+		*/
 		private function mediateView(view:DisplayObject):void
 		{
 			if (!context.mediatorMap.isMediated(view)) context.mediatorMap.mediate(view);

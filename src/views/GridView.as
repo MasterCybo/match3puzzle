@@ -39,27 +39,19 @@ package views
 		public function GridView()
 		{
 			super();
-			
-			_cellsLayer = new BaseView();
-			_chipsLayer = new ChipsLayer();
-			_emittersLayer = new BaseView();
-			
-			addChild(_cellsLayer);
-			addChild(_chipsLayer);
-			addChild(_emittersLayer);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-//			_cellsLayer = new BaseView();
-//			_chipsLayer = new ChipsLayer();
-//			_emittersLayer = new BaseView();
-//
-//			addChild(_cellsLayer);
-//			addChild(_chipsLayer);
-//			addChild(_emittersLayer);
+			_cellsLayer = new BaseView();
+			_chipsLayer = new ChipsLayer();
+			_emittersLayer = new BaseView();
+
+			addChild(_cellsLayer);
+			addChild(_chipsLayer);
+			addChild(_emittersLayer);
 		}
 		
 		override public function dispose():void
@@ -84,12 +76,14 @@ package views
 		
 		public function update(grid:Grid):void
 		{
+			var animation:IAnimationGroup = AnimationFactory.me.makeSpawn();
+			animation.addEventListener(FINISH_ANIMATION, onFinishAnimation);
+			
 			var cell:Cell;
 			var chip:Chip;
 			var cellView:CellView;
 			var chipView:ChipView;
-			var animation:IAnimationGroup = AnimationFactory.me.makeSpawn();
-			animation.addEventListener(FINISH_ANIMATION, onFinishAnimation);
+			
 			for (var col:int = 0; col < grid.numCols; col++) {
 				for (var row:int = 0; row < grid.numRows; row++) {
 					cell = grid.getCell(col, row);

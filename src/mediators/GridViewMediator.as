@@ -37,7 +37,7 @@ package mediators
 			_grid = injector.getOf(Grid);
 			
 			addContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
-			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
+//			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			
 			onLevelCreated();
 		}
@@ -85,7 +85,7 @@ package mediators
 		{
 			trace("*execute* GridViewMediator::onFinishAnimation()");
 			view.stage.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
-			findAndRemoveMatches();
+//			findAndRemoveMatches();
 		}
 		
 		private function findAndRemoveMatches():void

@@ -15,6 +15,7 @@ package views
 	{
 		private var _chip:Chip;
 		private var _image:Image;
+		private var _texture:Texture;
 		private var _pivotX:Number = 0;
 		private var _pivotY:Number = 0;
 		
@@ -22,11 +23,10 @@ package views
 		
 		public function ChipView(chip:Chip, texture:Texture)
 		{
-			_chip = chip;
 			super();
 			
-			_image = new Image(texture);
-			addChild(_image);
+			_chip = chip;
+			_texture = texture;
 			
 //			_tf = new TextField();
 //			_tf.selectable = false;
@@ -34,14 +34,17 @@ package views
 //			_tf.autoSize = TextFieldAutoSize.LEFT;
 //			_tf.text = _chip.col + ":" + _chip.row;
 //			addChild(_tf);
-			
-			pivotX = int(_image.width / 2);
-			pivotY = int(_image.height / 2);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
+			
+			_image = new Image(_texture);
+			addChild(_image);
+			
+			pivotX = int(_image.width / 2);
+			pivotY = int(_image.height / 2);
 		}
 		
 		override public function dispose():void
