@@ -92,8 +92,8 @@ package views
 						if (!cellView) {
 							var texture:Texture = Assets.me.getTexture("cell_bg");
 							cellView = new CellView(cell, texture, null);
-							cellView.x = col * texture.width;
-							cellView.y = row * texture.height;
+							cellView.x = col * Dimension.CELL_WIDTH;
+							cellView.y = row * Dimension.CELL_HEIGHT;
 							cellView.updateDebug(col, row);
 							_cellsLayer.addChild(cellView);
 							_cells[cell] = cellView;
@@ -164,12 +164,14 @@ package views
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
 					if (chipView.x != cellView.centerX || chipView.y != cellView.centerY) {
-						animProps.setPosition(cellView.centerX, cellView.centerY);
-						animation.addTarget(chipView, animProps);
+						chipView.x = cellView.centerX;
+						chipView.y = cellView.centerY;
+//						animProps.setPosition(cellView.centerX, cellView.centerY);
+//						animation.addTarget(chipView, animProps);
 					}
 				}
 			}
-			animation.start(null, null, FINISH_ANIMATION);
+//			animation.start(null, null, FINISH_ANIMATION);
 		}
 		
 		public function cancelMove(chip:Chip):void

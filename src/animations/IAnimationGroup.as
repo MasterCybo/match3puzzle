@@ -3,13 +3,13 @@
  */
 package animations
 {
-	import views.BaseView;
+	import starling.display.DisplayObject;
 	
 	public interface IAnimationGroup
 	{
 		function addEventListener(type:String, listener:Function):void;
 		function removeEventListener(type:String, listener:Function):void;
-		function addTarget(target:BaseView, property:AnimationProperty = null):IAnimationGroup;
+		function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup;
 		function start(startEventType:String = null, updateEventType:String = null, finishEventType:String = null):IAnimationGroup;
 		function getProperty():AnimationProperty;
 	}

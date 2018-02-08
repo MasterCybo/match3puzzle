@@ -5,7 +5,7 @@ package collections
 {
 	public class Dimension
 	{
-		public static const CELL_WIDTH:uint = 64;
-		public static const CELL_HEIGHT:uint = 64;
+		public static const CELL_WIDTH:uint = 144;
+		public static const CELL_HEIGHT:uint = 144;
 	}
 }

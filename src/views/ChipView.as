@@ -8,14 +8,11 @@ package views
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
-	import starling.display.Image;
 	import starling.textures.Texture;
 	
-	public class ChipView extends BaseView
+	public class ChipView extends BaseImage
 	{
 		private var _chip:Chip;
-		private var _image:Image;
-		private var _texture:Texture;
 		private var _pivotX:Number = 0;
 		private var _pivotY:Number = 0;
 		
@@ -23,10 +20,9 @@ package views
 		
 		public function ChipView(chip:Chip, texture:Texture)
 		{
-			super();
+			super(texture);
 			
 			_chip = chip;
-			_texture = texture;
 			
 //			_tf = new TextField();
 //			_tf.selectable = false;
@@ -40,18 +36,14 @@ package views
 		{
 			super.initialize();
 			
-			_image = new Image(_texture);
-			addChild(_image);
-			
-			pivotX = int(_image.width / 2);
-			pivotY = int(_image.height / 2);
+			pivotX = int(width / 2);
+			pivotY = int(height / 2);
 		}
 		
 		override public function dispose():void
 		{
 			super.dispose();
 			_chip = null;
-			_image = null;
 		}
 		
 		public function get model():Chip { return _chip; }

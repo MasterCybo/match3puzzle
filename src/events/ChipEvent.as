@@ -3,21 +3,16 @@
  */
 package events
 {
-	import flash.events.Event;
+	import starling.events.Event;
 	
 	public class ChipEvent extends Event
 	{
 		public static const CHIP_MOVED:String = "chipMoved";
 		public static const CHIP_POSITION_UPDATED:String = "chipPositionUpdated";
 		
-		public function ChipEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+		public function ChipEvent(type:String, bubbles:Boolean = false, data:Object = null)
 		{
-			super(type, bubbles, cancelable);
-		}
-		
-		override public function clone():Event
-		{
-			return new ChipEvent(type, bubbles, cancelable);
+			super(type, bubbles, data);
 		}
 	}
 }

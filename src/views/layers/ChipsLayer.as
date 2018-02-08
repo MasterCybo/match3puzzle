@@ -5,7 +5,11 @@ package views.layers
 {
 	import animations.AnimationFactory;
 	
-	import flash.events.MouseEvent;
+	import events.ChipEvent;
+	
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	
 	import views.BaseView;
 	import views.ChipView;
@@ -13,6 +17,8 @@ package views.layers
 	public class ChipsLayer extends BaseView
 	{
 		private var _isLocked:Boolean;
+		private var _offsetX:int;
+		private var _offsetY:int;
 		
 		public function ChipsLayer()
 		{
@@ -22,47 +28,43 @@ package views.layers
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			addEventListener(MouseEvent.MOUSE_DOWN, mouseHandler);
-			addEventListener(MouseEvent.MOUSE_MOVE, mouseHandler);
-			addEventListener(MouseEvent.MOUSE_UP, mouseHandler);
+			addEventListener(TouchEvent.TOUCH, touchHandler);
 		}
 		
 		override public function dispose():void
 		{
-			removeEventListener(MouseEvent.MOUSE_DOWN, mouseHandler);
-			removeEventListener(MouseEvent.MOUSE_MOVE, mouseHandler);
-			removeEventListener(MouseEvent.MOUSE_UP, mouseHandler);
+			removeEventListener(TouchEvent.TOUCH, touchHandler);
 			super.dispose();
 		}
 		
-		private function mouseHandler(event:MouseEvent):void
+		private function touchHandler(event:TouchEvent):void
 		{
-			var chipView:ChipView = event.target as ChipView;
-			if (chipView) {
-				switch (event.type) {
-					case MouseEvent.MOUSE_DOWN:
-						trace("@ MOUSE press on Chip : " + chipView.model.col + ":" + chipView.model.row);
-						if(chipView.model.movable) {
-							AnimationFactory.me.makeSelection().addTarget(chipView).start();
-							chipView.parent.addChild(chipView);
-//							chipView.startDrag();
-						} else {
-							_isLocked = true;
-							AnimationFactory.me.makeLocked().addTarget(chipView).start();
-						}
-						break;
-					case MouseEvent.MOUSE_MOVE:
-						break;
-					case MouseEvent.MOUSE_UP:
-						AnimationFactory.me.makeDeselection().addTarget(chipView).start();
-//						if (!_isLocked) {
-//							chipView.stopDrag();
-//							chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
-//						}
-						_isLocked = false;
-						break;
-				}
+			var touch:Touch = event.touches[0];
+			var chipView:ChipView = touch.target as ChipView;
+			
+			switch (touch.phase) {
+				case TouchPhase.BEGAN:
+					if(chipView.model.movable) {
+						AnimationFactory.me.makeSelection().addTarget(chipView).start();
+						chipView.parent.addChild(chipView);
+						_offsetX = touch.globalX - chipView.x;
+						_offsetY = touch.globalY - chipView.y;
+					} else {
+						_isLocked = true;
+						AnimationFactory.me.makeLocked().addTarget(chipView).start();
+					}
+					break;
+				case TouchPhase.MOVED:
+					chipView.x = touch.globalX - _offsetX;
+					chipView.y = touch.globalY - _offsetY;
+					break;
+				case TouchPhase.ENDED:
+					AnimationFactory.me.makeDeselection().addTarget(chipView).start();
+					if (!_isLocked) {
+						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
+					}
+					_isLocked = false;
+					break;
 			}
 		}
 	}

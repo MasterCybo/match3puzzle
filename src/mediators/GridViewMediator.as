@@ -37,7 +37,7 @@ package mediators
 			_grid = injector.getOf(Grid);
 			
 			addContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
-//			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
+			addViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			
 			onLevelCreated();
 		}
@@ -69,14 +69,14 @@ package mediators
 			var newCol:int = view.getColumn(dragChipView.x);
 			var newRow:int = view.getRow(dragChipView.y);
 			
-			var dropChip:Chip = _grid.getChip(newCol, newRow);
+			var pushedChip:Chip = _grid.getChip(newCol, newRow);
 			
 			if (MoveChipCondition.checkMove(dragChip, newCol, newRow)) {
 				_grid.makeSwap(dragChip.col, dragChip.row, newCol, newRow);
 				view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
-				view.updatePositionChips(Vector.<Chip>([dragChip, dropChip]));
+				view.updatePositionChips(Vector.<Chip>([dragChip, pushedChip]));
 			} else {
-				if (dropChip && dropChip != dragChip) view.cancelMove(dropChip);
+				if (pushedChip && pushedChip != dragChip) view.cancelMove(pushedChip);
 			}
 			view.updatePositionChips(Vector.<Chip>([dragChip]));
 		}

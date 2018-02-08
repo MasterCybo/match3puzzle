@@ -8,7 +8,7 @@ package animations.anims
 	import aze.motion.EazeTween;
 	import aze.motion.easing.Cubic;
 	
-	import views.BaseView;
+	import starling.display.DisplayObject;
 	
 	public class LockAnimation extends AnimationGroup
 	{
@@ -17,7 +17,7 @@ package animations.anims
 			super();
 		}
 		
-		override public function addTarget(target:BaseView, property:AnimationProperty = null):IAnimationGroup
+		override public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			var duration:Number = 0.05;
 			var duration05:Number = duration / 2;

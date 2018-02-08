@@ -1,17 +1,14 @@
-/**
- * Created by Artem-Home on 06.09.2016.
- */
 package views
 {
-	import starling.display.Sprite;
+	import starling.display.Image;
 	import starling.events.Event;
+	import starling.textures.Texture;
 	
-	public class BaseView extends Sprite
+	public class BaseImage extends Image
 	{
-		public function BaseView()
+		public function BaseImage(texture:Texture)
 		{
-			super();
-//			touchable = false;
+			super(texture);
 			stage ? initialize() : addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

@@ -7,9 +7,8 @@ package animations
 	
 	import aze.motion.EazeTween;
 	
+	import starling.display.DisplayObject;
 	import starling.events.EventDispatcher;
-	
-	import views.BaseView;
 	
 	public class AnimationGroup extends EventDispatcher implements IAnimationGroup
 	{
@@ -31,7 +30,7 @@ package animations
 		
 		public function getProperty():AnimationProperty { return new AnimationProperty(); }
 		
-		public function addTarget(target:BaseView, property:AnimationProperty = null):IAnimationGroup
+		public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			// override me
 			return this;

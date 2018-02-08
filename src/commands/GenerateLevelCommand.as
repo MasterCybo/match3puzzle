@@ -30,7 +30,6 @@ package commands
 		{
 			super.execute();
 			
-			var typeCells:Vector.<Enum> = Enum.getElementsList(EnumCellType);
 			var typeChips:Vector.<Enum> = Enum.getElementsList(EnumChipType);
 			
 			var grid:Grid = injector.getOf(Grid);
@@ -41,8 +40,7 @@ package commands
 			for (var row:int = 0; row < grid.numRows; row++) {
 				for (var col:int = 0; col < grid.numCols; col++) {
 					cell = grid.getCell(col, row);
-					var indexCellType:uint = int(1 + Math.random() * (typeCells.length - 2));
-					cell.type = typeCells[indexCellType] as EnumCellType;
+					cell.type = EnumCellType.CELL_NORMAL;
 					var indexChipType:uint = int(Math.random() * (typeChips.length - 1));
 					chip = ChipFactory.createChip(typeChips[indexChipType] as EnumChipType);
 					chip.col = col;

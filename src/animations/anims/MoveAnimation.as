@@ -8,7 +8,7 @@ package animations.anims
 	import aze.motion.EazeTween;
 	import aze.motion.easing.Cubic;
 	
-	import views.BaseView;
+	import starling.display.DisplayObject;
 	
 	public class MoveAnimation extends AnimationGroup
 	{
@@ -17,7 +17,7 @@ package animations.anims
 			super();
 		}
 		
-		override public function addTarget(target:BaseView, property:AnimationProperty = null):IAnimationGroup
+		override public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			// property = {x:x, y:y}
 //			return addTween(new EazeTween(target, false).to(0.15, property, false).easing(Cubic.easeOut));

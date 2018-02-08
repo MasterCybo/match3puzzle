@@ -8,7 +8,7 @@ package animations.anims
 	import aze.motion.EazeTween;
 	import aze.motion.easing.Cubic;
 	
-	import views.BaseView;
+	import starling.display.DisplayObject;
 	
 	public class SpawnAnimation extends AnimationGroup
 	{
@@ -19,7 +19,7 @@ package animations.anims
 			super();
 		}
 		
-		override public function addTarget(target:BaseView, property:AnimationProperty = null):IAnimationGroup
+		override public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			/*
 			if (!_tween) {
