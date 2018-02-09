@@ -63,16 +63,13 @@ package views.layers
 					var deltaX:int = Math.abs(touch.globalX - _beganX);
 					var deltaY:int = Math.abs(touch.globalY - _beganY);
 					
-					if (deltaX > 3) {
+					if (deltaX > 0) {
 						if (deltaX > deltaY) _isHorizontal = true;
 					}
-//					if (!_isHorizontal) {
-						if (deltaY > 3) {
-							if (deltaY > deltaX) _isHorizontal = false;
-						}
-//					}
+					if (deltaY > 0) {
+						if (deltaY > deltaX) _isHorizontal = false;
+					}
 					
-					trace("deltaX, deltaY: " + deltaX, deltaY);
 					chipView.x = int(!_isHorizontal) * _beganX + int(_isHorizontal) * (touch.globalX - _offsetX);
 					chipView.y = int(_isHorizontal) * _beganY + int(!_isHorizontal) * (touch.globalY - _offsetY);
 					chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
