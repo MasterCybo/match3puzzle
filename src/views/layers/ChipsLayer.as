@@ -19,6 +19,9 @@ package views.layers
 		private var _isLocked:Boolean;
 		private var _offsetX:int;
 		private var _offsetY:int;
+		private var _beganX:int;
+		private var _beganY:int;
+		private var _isHorizontal:Boolean;
 		
 		public function ChipsLayer()
 		{
@@ -49,14 +52,29 @@ package views.layers
 						chipView.parent.addChild(chipView);
 						_offsetX = touch.globalX - chipView.x;
 						_offsetY = touch.globalY - chipView.y;
+						_beganX = chipView.x;
+						_beganY = chipView.y;
 					} else {
 						_isLocked = true;
 						AnimationFactory.me.makeLocked().addTarget(chipView).start();
 					}
 					break;
 				case TouchPhase.MOVED:
-					chipView.x = touch.globalX - _offsetX;
-					chipView.y = touch.globalY - _offsetY;
+					var deltaX:int = Math.abs(touch.globalX - _beganX);
+					var deltaY:int = Math.abs(touch.globalY - _beganY);
+					
+					if (deltaX > 3) {
+						if (deltaX > deltaY) _isHorizontal = true;
+					}
+//					if (!_isHorizontal) {
+						if (deltaY > 3) {
+							if (deltaY > deltaX) _isHorizontal = false;
+						}
+//					}
+					
+					trace("deltaX, deltaY: " + deltaX, deltaY);
+					chipView.x = int(!_isHorizontal) * _beganX + int(_isHorizontal) * (touch.globalX - _offsetX);
+					chipView.y = int(_isHorizontal) * _beganY + int(!_isHorizontal) * (touch.globalY - _offsetY);
 					chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
 					break;
 				case TouchPhase.ENDED:
