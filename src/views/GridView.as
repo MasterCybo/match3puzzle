@@ -149,7 +149,7 @@ package views
 			var animProps:AnimationProperty = animation.getProperty();
 			if (!chips) {
 				for each (chipView in _chips) {
-//					chipView.debugUpdate();
+					chipView.debugUpdate();
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
 //					animProps.setPosition(cellView.centerX, cellView.centerY);
@@ -160,7 +160,7 @@ package views
 				for (var i:int = 0; i < chips.length; i++) {
 					chip = chips[i];
 					chipView = getChip(chip);
-//					chipView.debugUpdate();
+					chipView.debugUpdate();
 					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
 					cellView = getCell(cell);
 					if (chipView.x != cellView.centerX || chipView.y != cellView.centerY) {

@@ -7,10 +7,6 @@ package views.layers
 	
 	import events.ChipEvent;
 	
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	
 	import views.BaseView;
 	import views.ChipView;
 	
@@ -21,7 +17,9 @@ package views.layers
 		private var _offsetY:int;
 		private var _beganX:int;
 		private var _beganY:int;
+		private var _deltaMove:int;
 		private var _isHorizontal:Boolean;
+		private var _isDropped:Boolean;
 		
 		public function ChipsLayer()
 		{
@@ -31,22 +29,25 @@ package views.layers
 		override protected function initialize():void
 		{
 			super.initialize();
-			addEventListener(TouchEvent.TOUCH, touchHandler);
+			addEventListener(ChipEvent.CHIP_SELECTED, chipEventHandler);
+			addEventListener(ChipEvent.CHIP_SELECTED, chipEventHandler);
 		}
 		
 		override public function dispose():void
 		{
-			removeEventListener(TouchEvent.TOUCH, touchHandler);
+			removeEventListener(ChipEvent.CHIP_SELECTED, chipEventHandler);
 			super.dispose();
 		}
 		
-		private function touchHandler(event:TouchEvent):void
+		private function chipEventHandler(event:ChipEvent):void
 		{
-			var touch:Touch = event.touches[0];
-			var chipView:ChipView = touch.target as ChipView;
-			
+			var chipView:ChipView = event.target as ChipView;
+			trace("chipView: " + chipView);
+//			trace("\ttouch.target: " + touch.target);
+			/*
 			switch (touch.phase) {
 				case TouchPhase.BEGAN:
+					_isDropped = false;
 					if(chipView.model.movable) {
 						AnimationFactory.me.makeSelection().addTarget(chipView).start();
 						chipView.parent.addChild(chipView);
@@ -60,28 +61,51 @@ package views.layers
 					}
 					break;
 				case TouchPhase.MOVED:
-					var deltaX:int = Math.abs(touch.globalX - _beganX);
-					var deltaY:int = Math.abs(touch.globalY - _beganY);
-					
-					if (deltaX > 0) {
-						if (deltaX > deltaY) _isHorizontal = true;
+					if (!_isDropped) {
+						var deltaX:int = Math.abs(touch.globalX - _beganX);
+						var deltaY:int = Math.abs(touch.globalY - _beganY);
+						var chipSize:int;
+						
+						if (deltaX > 0) {
+							if (deltaX > deltaY) {
+								_isHorizontal = true;
+								chipSize = chipView.width;
+							}
+						}
+						if (deltaY > 0) {
+							if (deltaY > deltaX) {
+								_isHorizontal = false;
+								chipSize = chipView.height;
+							}
+						}
+						
+						_deltaMove = Math.max(deltaX, deltaY);
+						
+						chipView.x = int(!_isHorizontal) * _beganX + int(_isHorizontal) * (touch.globalX - _offsetX);
+						chipView.y = int(_isHorizontal) * _beganY + int(!_isHorizontal) * (touch.globalY - _offsetY);
+						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
+						
+						if (_deltaMove > chipSize / 2) {
+							dropChip(chipView);
+						}
 					}
-					if (deltaY > 0) {
-						if (deltaY > deltaX) _isHorizontal = false;
-					}
-					
-					chipView.x = int(!_isHorizontal) * _beganX + int(_isHorizontal) * (touch.globalX - _offsetX);
-					chipView.y = int(_isHorizontal) * _beganY + int(!_isHorizontal) * (touch.globalY - _offsetY);
-					chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
 					break;
 				case TouchPhase.ENDED:
-					AnimationFactory.me.makeDeselection().addTarget(chipView).start();
-					if (!_isLocked) {
-						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_DROPPED, true));
-					}
-					_isLocked = false;
+					dropChip(chipView);
 					break;
 			}
+			*/
+		}
+		
+		private function dropChip(chipView:ChipView):void
+		{
+			_isDropped = true;
+			
+			AnimationFactory.me.makeDeselection().addTarget(chipView).start();
+			if (!_isLocked) {
+				chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_DROPPED, true));
+			}
+			_isLocked = false;
 		}
 	}
 }
