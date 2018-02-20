@@ -102,7 +102,7 @@ package views.layers
 							}
 						}
 						if (deltaY > 0) {
-							if (deltaY > deltaX) {
+							if (deltaX <= deltaY) {
 								_isHorizontal = false;
 								deltaMove = _cellHeight;
 							}
