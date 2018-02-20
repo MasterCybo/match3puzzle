@@ -9,34 +9,31 @@ package views
 	import animations.events.AnimationEvent;
 	
 	import collections.Dimension;
-	import collections.EnumCellType;
 	
 	import data.Cell;
 	import data.Chip;
 	import data.Grid;
-	
-	import flash.utils.Dictionary;
 	
 	import starling.events.Event;
 	import starling.textures.Texture;
 	
 	import utils.Assets;
 	
+	import views.layers.CellsLayer;
 	import views.layers.ChipsLayer;
 	
-	public class GridView extends BaseView
+	public class BoardView extends BaseView
 	{
 		public static const FINISH_ANIMATION:String = "finishAnimation";
 		public static const FINISH_COLLAPSE:String = "finishCollapse";
 		
-		private var _cells:Dictionary = new Dictionary();
-		private var _chips:Dictionary = new Dictionary();
-		
-		private var _cellsLayer:BaseView;
-		private var _chipsLayer:BaseView;
+		private var _cellsLayer:CellsLayer;
+		private var _chipsLayer:ChipsLayer;
 		private var _emittersLayer:BaseView;
 		
-		public function GridView()
+		private var _grid:Grid;
+		
+		public function BoardView()
 		{
 			super();
 		}
@@ -45,10 +42,12 @@ package views
 		{
 			super.initialize();
 			
-			_cellsLayer = new BaseView();
-			_chipsLayer = new ChipsLayer();
+			var cellTexture:Texture = Assets.me.getTexture("cell_bg");
+			
+			_cellsLayer = new CellsLayer();
+			_chipsLayer = new ChipsLayer(cellTexture.width, cellTexture.height);
 			_emittersLayer = new BaseView();
-
+			
 			addChild(_cellsLayer);
 			addChild(_chipsLayer);
 			addChild(_emittersLayer);
@@ -58,8 +57,6 @@ package views
 		{
 			stage.removeEventListener(FINISH_COLLAPSE, onFinishCollapse);
 			super.dispose();
-			_cells = null;
-			_chips = null;
 		}
 		
 		public function removeAll():void
@@ -71,56 +68,25 @@ package views
 		
 		public function getColumn(localX:Number):int { return localX / Dimension.CELL_WIDTH; }
 		public function getRow(localY:Number):int { return localY / Dimension.CELL_HEIGHT; }
-		public function getCell(cell:Cell):CellView { return _cells[cell]; }
-		public function getChip(chip:Chip):ChipView { return _chips[chip]; }
+		public function getCell(cell:Cell):CellView { return _cellsLayer.getCellView(cell); }
+		public function getChip(chip:Chip):ChipView { return _chipsLayer.getChipView(chip); }
+		
+		public function draw(grid:Grid):void
+		{
+			_grid = grid;
+			
+			_cellsLayer.draw(_grid);
+			_chipsLayer.draw(_grid);
+			
+//			update(grid);
+		}
 		
 		public function update(grid:Grid):void
 		{
 			var animation:IAnimationGroup = AnimationFactory.me.makeSpawn();
 			animation.addEventListener(FINISH_ANIMATION, onFinishAnimation);
 			
-			var cell:Cell;
-			var chip:Chip;
-			var cellView:CellView;
-			var chipView:ChipView;
 			
-			for (var col:int = 0; col < grid.numCols; col++) {
-				for (var row:int = 0; row < grid.numRows; row++) {
-					cell = grid.getCell(col, row);
-					if (cell.type != EnumCellType.CELL_INVISIBLE) {
-						cellView = getCell(cell);
-						if (!cellView) {
-							var texture:Texture = Assets.me.getTexture("cell_bg");
-							cellView = new CellView(cell, texture, null);
-							cellView.x = col * Dimension.CELL_WIDTH;
-							cellView.y = row * Dimension.CELL_HEIGHT;
-							cellView.updateDebug(col, row);
-							_cellsLayer.addChild(cellView);
-							_cells[cell] = cellView;
-							
-							if (cell.type == EnumCellType.CELL_EMITTER) {
-//								var emitterView:EmitterView = new EmitterView();
-//								emitterView.x = cellView.centerX;
-//								emitterView.y = cellView.y;
-//								_emittersLayer.addChild(emitterView);
-							}
-						}
-						
-						chip = grid.getChip(col, row);
-						if (chip) {
-							chipView = getChip(chip);
-							if (!chipView) {
-								chipView = new ChipView(chip, Assets.me.getTexture(chip.type.value));
-								chipView.x = cellView.centerX;
-								chipView.y = cellView.centerY;
-								_chipsLayer.addChild(chipView);
-								_chips[chip] = chipView;
-								animation.addTarget(chipView);
-							}
-						}
-					}
-				}
-			}
 			animation.start(null, null, FINISH_ANIMATION);
 		}
 		
@@ -130,14 +96,14 @@ package views
 			dispatchEvent(new Event(FINISH_ANIMATION, true));
 		}
 		
-		public function removeChip(chip:Chip):void
-		{
-			var chipView:ChipView = _chips[chip];
-			delete _chips[chip];
-			if (!chipView) return;
-			_chipsLayer.removeChild(chipView);
-			chipView.dispose();
-		}
+//		public function removeChip(chip:Chip):void
+//		{
+//			var chipView:ChipView = _chips[chip];
+//			delete _chips[chip];
+//			if (!chipView) return;
+//			_chipsLayer.removeChild(chipView);
+//			chipView.dispose();
+//		}
 		
 		public function updatePositionChips(chips:Vector.<Chip> = null):void
 		{
@@ -148,13 +114,13 @@ package views
 			var animation:IAnimationGroup = AnimationFactory.me.makeMoveTo();
 			var animProps:AnimationProperty = animation.getProperty();
 			if (!chips) {
-				for each (chipView in _chips) {
-					chipView.debugUpdate();
-					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
-					cellView = getCell(cell);
-//					animProps.setPosition(cellView.centerX, cellView.centerY);
-//					animation.addTarget(chipView, animProps);
-				}
+//				for each (chipView in _chips) {
+//					chipView.debugUpdate();
+//					cell = chipView.model.grid.getCell(chipView.model.col, chipView.model.row);
+//					cellView = getCell(cell);
+////					animProps.setPosition(cellView.centerX, cellView.centerY);
+////					animation.addTarget(chipView, animProps);
+//				}
 			} else {
 				var chip:Chip;
 				for (var i:int = 0; i < chips.length; i++) {
@@ -176,7 +142,7 @@ package views
 		
 		public function cancelMove(chip:Chip):void
 		{
-			AnimationFactory.me.makeLocked().addTarget(getChip(chip)).start();
+			AnimationFactory.me.makeLocked().to(getChip(chip)).start();
 		}
 		
 		public function collapseChips(matchesList:Vector.<Vector.<Chip>>):void
@@ -197,8 +163,8 @@ package views
 					chipView = getChip(chip);
 					if (chipView) { // Фишка могла быть уже удалена, например, на перекрёстке
 						chipView.debugCollapse();
-						animation.addTarget(chipView);
-						delete _chips[chip];
+						animation.to(chipView);
+//						delete _chips[chip];
 					}
 				}
 			}

@@ -19,7 +19,7 @@ package animations.anims
 			super();
 		}
 		
-		override public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
+		override public function to(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			/*
 			if (!_tween) {

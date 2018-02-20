@@ -30,7 +30,7 @@ package animations
 		
 		public function getProperty():AnimationProperty { return new AnimationProperty(); }
 		
-		public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
+		public function to(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			// override me
 			return this;

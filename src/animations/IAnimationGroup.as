@@ -9,7 +9,7 @@ package animations
 	{
 		function addEventListener(type:String, listener:Function):void;
 		function removeEventListener(type:String, listener:Function):void;
-		function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup;
+		function to(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup;
 		function start(startEventType:String = null, updateEventType:String = null, finishEventType:String = null):IAnimationGroup;
 		function getProperty():AnimationProperty;
 	}

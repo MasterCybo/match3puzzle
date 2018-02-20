@@ -3,7 +3,7 @@ package
 	import utils.Assets;
 	
 	import views.BaseView;
-	import views.GridView;
+	import views.BoardView;
 	
 	public class GameScreen extends BaseView
 	{
@@ -28,8 +28,8 @@ package
 		
 		private function displayGrid():void
 		{
-			var gridView:GridView = new GridView();
-			addChild(gridView);
+			var gameFieldView:BoardView = new BoardView();
+			addChild(gameFieldView);
 		}
 	}
 }

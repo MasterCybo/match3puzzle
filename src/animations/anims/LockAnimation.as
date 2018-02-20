@@ -17,7 +17,7 @@ package animations.anims
 			super();
 		}
 		
-		override public function addTarget(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
+		override public function to(target:DisplayObject, property:AnimationProperty = null):IAnimationGroup
 		{
 			var duration:Number = 0.05;
 			var duration05:Number = duration / 2;

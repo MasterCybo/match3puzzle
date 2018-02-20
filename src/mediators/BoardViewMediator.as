@@ -19,13 +19,13 @@ package mediators
 	import utils.MoveChipCondition;
 	
 	import views.ChipView;
-	import views.GridView;
+	import views.BoardView;
 	
-	public class GridViewMediator extends Mediator
+	public class BoardViewMediator extends Mediator
 	{
 		private var _grid:Grid;
 		
-		public function GridViewMediator(context:IContext)
+		public function BoardViewMediator(context:IContext)
 		{
 			super(context);
 		}
@@ -45,20 +45,20 @@ package mediators
 		
 		override public function destroy():void
 		{
-			view.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+			view.removeEventListener(BoardView.FINISH_ANIMATION, onFinishAnimation);
 			removeContextListener(LevelEvent.LEVEL_CREATED, onLevelCreated);
 			removeViewListener(ChipEvent.CHIP_DROPPED, onChipDropped);
 			removeViewListener(ChipEvent.CHIP_MOVED, onChipMoved);
 			super.destroy();
 		}
 		
-		private function get view():GridView { return getView() as GridView; }
+		private function get view():BoardView { return getView() as BoardView; }
 		
 		private function onLevelCreated(event:LevelEvent = null):void
 		{
 			view.removeAll();
-			view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
-			view.update(_grid);
+			view.addEventListener(BoardView.FINISH_ANIMATION, onFinishAnimation);
+			view.draw(_grid);
 			view.x = int((view.stage.width - view.width) / 2);
 			view.y = int((view.stage.height - view.height) / 2);
 		}
@@ -69,7 +69,7 @@ package mediators
 			var dragChip:Chip = dragChipView.model;
 			
 			if (MoveChipCondition.checkMove(dragChip, dragChip.col, dragChip.row)) {
-				view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+				view.addEventListener(BoardView.FINISH_ANIMATION, onFinishAnimation);
 				view.updatePositionChips(Vector.<Chip>([dragChipView.model]));
 			} else {
 				view.cancelMove(dragChip);
@@ -90,7 +90,7 @@ package mediators
 			
 			if (MoveChipCondition.checkMove(dragChip, newCol, newRow)) {
 				_grid.makeSwap(dragChip.col, dragChip.row, newCol, newRow);
-				view.addEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+				view.addEventListener(BoardView.FINISH_ANIMATION, onFinishAnimation);
 				view.updatePositionChips(Vector.<Chip>([pushedChip]));
 //				chips = Vector.<Chip>([pushedChip]);
 			} else {
@@ -102,14 +102,14 @@ package mediators
 		
 		private function onFinishAnimation(event:Event):void
 		{
-			trace("*execute* GridViewMediator::onFinishAnimation()");
-			view.stage.removeEventListener(GridView.FINISH_ANIMATION, onFinishAnimation);
+			trace("*execute* BoardViewMediator::onFinishAnimation()");
+			view.stage.removeEventListener(BoardView.FINISH_ANIMATION, onFinishAnimation);
 //			findAndRemoveMatches();
 		}
 		
 		private function findAndRemoveMatches():void
 		{
-			trace("*execute* GridViewMediator::findAndRemoveMatches()");
+			trace("*execute* BoardViewMediator::findAndRemoveMatches()");
 			var matches:Vector.<Vector.<Chip>> = _grid.findAndRemoveMatches();
 			if (matches.length == 0) return;
 			view.collapseChips(matches);

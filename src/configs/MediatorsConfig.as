@@ -2,13 +2,13 @@ package configs
 {
 	import mediators.ChipViewMediator;
 	import mediators.GameScreenMediator;
-	import mediators.GridViewMediator;
+	import mediators.BoardViewMediator;
 	
 	import ru.arslanov.starling.mvc.config.Config;
 	import ru.arslanov.starling.mvc.context.IContext;
 	
 	import views.ChipView;
-	import views.GridView;
+	import views.BoardView;
 	
 	public class MediatorsConfig extends Config
 	{
@@ -22,7 +22,7 @@ package configs
 			super.configure();
 			
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
-			mediatorMap.map(GridView).toMediator(GridViewMediator);
+			mediatorMap.map(BoardView).toMediator(BoardViewMediator);
 			mediatorMap.map(ChipView).toMediator(ChipViewMediator);
 		}
 	}

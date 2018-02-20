@@ -3,15 +3,16 @@
  */
 package views
 {
+	import animations.AnimationFactory;
+	
 	import data.Chip;
 	
 	import events.ChipEvent;
 	
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+	import starling.display.DisplayObject;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
 	import starling.text.TextFormat;
@@ -22,8 +23,7 @@ package views
 		private var _chip:Chip;
 		private var _texture:Texture;
 		private var _image:BaseImage;
-		private var _pivotX:Number = 0;
-		private var _pivotY:Number = 0;
+		private var _selected:Boolean;
 		
 		private var _tf:TextField;
 		
@@ -48,68 +48,47 @@ package views
 			_tf.text = _chip.col + ":" + _chip.row;
 			addChild(_tf);
 			
-			updatePosition();
+			arrange();
 			
 			pivotX = int(_image.width / 2);
 			pivotY = int(_image.height / 2);
-			
-			addEventListener(TouchEvent.TOUCH, touchHandler);
 		}
 		
 		override public function dispose():void
 		{
-			removeEventListener(TouchEvent.TOUCH, touchHandler);
 			super.dispose();
 			_chip = null;
 		}
 		
-		private function touchHandler(event:TouchEvent):void
+		override public function hitTest(localPoint:Point):DisplayObject
 		{
-			event.stopPropagation();
-			event.stopImmediatePropagation();
-			
-			var touch:Touch = event.getTouch(_image);
-			
-			if (!touch || (touch.phase != TouchPhase.ENDED && touch.phase != TouchPhase.BEGAN)) return;
-			
-			var isSelf:Boolean = stage.hitTest(touch.getLocation(stage)) == _image;
-			
-			trace("isSelf: " + isSelf);
-			
-			switch (touch.phase) {
-				case TouchPhase.BEGAN:
-//					animatePress();
-					trace("Dispatch ChipEvent.CHIP_SELECTED");
-					dispatchEvent(new ChipEvent(ChipEvent.CHIP_SELECTED));
-					break;
-				case TouchPhase.ENDED:
-					if (isSelf) {
-//						animateRelease().onComplete(onReleaseComplete);
-					} else {
-//						animateRelease();
-					}
-					break;
-			}
-
-
-//			if (event.target == this) return;
-
-//			var touch:Touch = event.getTouch(this);
-//			if (touch) {
-//				trace("touch.target: " + touch.target);
-//				dispatchEvent(new TouchEvent(event.type, Vector.<Touch>([touch])));
-//			}
+			return _image.getBounds(this).containsPoint(localPoint) ? this : null;
 		}
 		
 		public function get model():Chip { return _chip; }
 		
+		public function get selected():Boolean {return _selected;}
+		public function set selected(value:Boolean):void
+		{
+			if (value == _selected) return;
+			_selected = value;
+			
+			if (_selected) {
+				AnimationFactory.me.makeSelection().to(this).start();
+				dispatchEvent(new ChipEvent(ChipEvent.CHIP_SELECTED));
+			} else {
+				AnimationFactory.me.makeDeselection().to(this).start();
+				dispatchEvent(new ChipEvent(ChipEvent.CHIP_DESELECTED));
+			}
+		}
+		
 		public function debugUpdate():void
 		{
 			_tf.text = _chip.col + ":" + _chip.row;
-			updatePosition();
+			arrange();
 		}
 		
-		private function updatePosition():void
+		private function arrange():void
 		{
 			_tf.x = int((_image.width - _tf.width) / 2);
 			_tf.y = int((_image.height - _tf.height) / 2);
