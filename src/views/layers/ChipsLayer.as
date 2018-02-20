@@ -6,7 +6,6 @@ package views.layers
 	import animations.AnimationFactory;
 	
 	import data.Chip;
-	
 	import data.Grid;
 	
 	import events.ChipEvent;
@@ -14,12 +13,8 @@ package views.layers
 	import flash.utils.Dictionary;
 	
 	import starling.events.Touch;
-	
 	import starling.events.TouchEvent;
-	
 	import starling.events.TouchPhase;
-	
-	import starling.textures.Texture;
 	
 	import utils.Assets;
 	
@@ -98,18 +93,18 @@ package views.layers
 					if (!_isDropped) {
 						var deltaX:int = Math.abs(touch.globalX - _beganX);
 						var deltaY:int = Math.abs(touch.globalY - _beganY);
-						var chipSize:int;
+						var deltaMove:int;
 						
 						if (deltaX > 0) {
 							if (deltaX > deltaY) {
 								_isHorizontal = true;
-								chipSize = chipView.width;
+								deltaMove = _cellWidth;
 							}
 						}
 						if (deltaY > 0) {
 							if (deltaY > deltaX) {
 								_isHorizontal = false;
-								chipSize = chipView.height;
+								deltaMove = _cellHeight;
 							}
 						}
 						
@@ -119,7 +114,7 @@ package views.layers
 						chipView.y = int(_isHorizontal) * _beganY + int(!_isHorizontal) * (touch.globalY - _offsetY);
 						chipView.dispatchEvent(new ChipEvent(ChipEvent.CHIP_MOVED, true));
 						
-						if (_deltaMove > chipSize / 2) {
+						if (_deltaMove > deltaMove / 2) {
 							dropChip(chipView);
 						}
 					}
