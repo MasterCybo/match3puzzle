@@ -10,9 +10,9 @@ package animations.anims
 	
 	import starling.display.DisplayObject;
 	
-	public class DeselectionAnimation extends AnimationGroup
+	public class SelectAnimation extends AnimationGroup
 	{
-		public function DeselectionAnimation()
+		public function SelectAnimation()
 		{
 			super();
 		}
@@ -21,7 +21,7 @@ package animations.anims
 		{
 			return addTween(
 					new EazeTween(target, false)
-							.to(0.1, {scaleX:1, scaleY:1}, false).easing(Cubic.easeIn));
+							.to(0.15, {scaleX:1.2, scaleY:1.2}, false).easing(Cubic.easeOut));
 		}
 	}
 }

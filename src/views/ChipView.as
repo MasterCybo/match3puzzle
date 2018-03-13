@@ -3,7 +3,7 @@
  */
 package views
 {
-	import animations.AnimationFactory;
+	import animations.FAnimate;
 	
 	import data.Chip;
 	
@@ -39,8 +39,9 @@ package views
 		{
 			super.initialize();
 			
-			_image = new BaseImage(_texture);
-			addChild(_image);
+			alpha = 0.5;
+			
+			addChild(_image = new BaseImage(_texture));
 			
 			_tf = new TextField(10, 10, "", new TextFormat("Verdana", 34));
 			_tf.touchable = false;
@@ -74,10 +75,10 @@ package views
 			_selected = value;
 			
 			if (_selected) {
-				AnimationFactory.me.makeSelection().to(this).start();
+				FAnimate.me.selection().to(this).start();
 				dispatchEvent(new ChipEvent(ChipEvent.CHIP_SELECTED));
 			} else {
-				AnimationFactory.me.makeDeselection().to(this).start();
+				FAnimate.me.deselection().to(this).start();
 				dispatchEvent(new ChipEvent(ChipEvent.CHIP_DESELECTED));
 			}
 		}

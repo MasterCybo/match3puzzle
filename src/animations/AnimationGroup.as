@@ -45,8 +45,8 @@ package animations
 		
 		public function start(startEventType:String = null, updateEventType:String = null, finishEventType:String = null):IAnimationGroup
 		{
-			trace("*execute* " + this + "::start()");
-			trace("_tweens.length : " + _tweens.length);
+//			trace("*execute* " + this + "::start()");
+//			trace("_tweens.length : " + _tweens.length);
 			
 			_updateEventType = updateEventType;
 			_finishEventType = finishEventType;
@@ -81,8 +81,8 @@ package animations
 		
 		protected function completeAllTweens():void
 		{
-			trace("*execute* " + this + "::completeAllTweens()");
-			trace("_countComplete : " + _countComplete);
+//			trace("*execute* " + this + "::completeAllTweens()");
+//			trace("_countComplete : " + _countComplete);
 			dispatchAnimationEvent(_finishEventType);
 			// override me
 		}

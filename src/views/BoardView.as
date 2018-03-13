@@ -3,8 +3,8 @@
  */
 package views
 {
-	import animations.AnimationFactory;
 	import animations.AnimationProperty;
+	import animations.FAnimate;
 	import animations.IAnimationGroup;
 	import animations.events.AnimationEvent;
 	
@@ -57,6 +57,8 @@ package views
 		{
 			stage.removeEventListener(FINISH_COLLAPSE, onFinishCollapse);
 			super.dispose();
+			
+			_grid = null;
 		}
 		
 		public function removeAll():void
@@ -83,7 +85,7 @@ package views
 		
 		public function update(grid:Grid):void
 		{
-			var animation:IAnimationGroup = AnimationFactory.me.makeSpawn();
+			var animation:IAnimationGroup = FAnimate.me.spawn();
 			animation.addEventListener(FINISH_ANIMATION, onFinishAnimation);
 			
 			
@@ -111,7 +113,7 @@ package views
 			var chipView:ChipView;
 			var cellView:CellView;
 			var cell:Cell;
-			var animation:IAnimationGroup = AnimationFactory.me.makeMoveTo();
+			var animation:IAnimationGroup = FAnimate.me.move();
 			var animProps:AnimationProperty = animation.getProperty();
 			if (!chips) {
 //				for each (chipView in _chips) {
@@ -142,7 +144,7 @@ package views
 		
 		public function cancelMove(chip:Chip):void
 		{
-			AnimationFactory.me.makeLocked().to(getChip(chip)).start();
+			FAnimate.me.lock().to(getChip(chip)).start();
 		}
 		
 		public function collapseChips(matchesList:Vector.<Vector.<Chip>>):void
@@ -154,7 +156,7 @@ package views
 			var chip:Chip;
 			var chipView:ChipView;
 			var matches:Vector.<Chip>;
-			var animation:IAnimationGroup = AnimationFactory.me.makeCollapse();
+			var animation:IAnimationGroup = FAnimate.me.collapse();
 			animation.addEventListener(FINISH_COLLAPSE, onFinishCollapse);
 			for (var i:int = 0; i < matchesList.length; i++) {
 				matches = matchesList[i];

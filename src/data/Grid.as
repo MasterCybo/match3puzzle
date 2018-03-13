@@ -8,6 +8,8 @@ package data
 	import data.builders.CellFactory;
 	import data.builders.ChipFactory;
 	
+	import flash.geom.Point;
+	
 	import utils.SimpleMatchFinder;
 	
 	public class Grid
@@ -17,6 +19,8 @@ package data
 		private var _numCells:uint;
 		private var _cells:Vector.<Cell>;
 		private var _chips:Vector.<Chip>;
+		
+		private var _position:Point = new Point(-1, -1);
 		
 		public function Grid()
 		{
@@ -45,6 +49,59 @@ package data
 		public function get numRows():uint { return _numRows; }
 		
 		private function getIndex(col:int, row:int):uint { return row * _numCols + col; }
+		
+		public function getPosition(object:*):Point
+		{
+			var col:int = -1;
+			var row:int = -1;
+			var index:int;
+			
+			if (object is Cell) {
+				index = _cells.indexOf(object);
+			} else if (object is Chip) {
+				index = _chips.indexOf(object);
+			}
+			
+			if (index != -1) {
+				col = index % _numCols;
+				row = index / _numCols;
+			}
+			
+			_position.setTo(col, row);
+			return _position;
+		}
+		
+		public function getCol(object:*):int
+		{
+			var col:int = -1;
+			var index:int;
+			
+			if (object is Cell) {
+				index = _cells.indexOf(object);
+			} else if (object is Chip) {
+				index = _chips.indexOf(object);
+			}
+			
+			if (index != -1) col = index % _numCols;
+			
+			return col;
+		}
+		
+		public function getRow(object:*):int
+		{
+			var row:int = -1;
+			var index:int;
+			
+			if (object is Cell) {
+				index = _cells.indexOf(object);
+			} else if (object is Chip) {
+				index = _chips.indexOf(object);
+			}
+			
+			if (index != -1) row = index / _numCols;
+			
+			return row;
+		}
 		
 		public function getCell(col:int, row:int):Cell
 		{

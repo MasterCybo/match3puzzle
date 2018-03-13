@@ -8,6 +8,7 @@ package views
 	import starling.display.Image;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	import starling.textures.Texture;
 	
 	public class CellView extends BaseView
@@ -45,8 +46,13 @@ package views
 			_offsetCenterX = int(_image.width / 2);
 			_offsetCenterY = int(_image.height / 2);
 			
-			_tf = new TextField(10, 10, "");
+			var col:int = _cell.grid.getCol(_cell);
+			var row:int = _cell.grid.getRow(_cell);
+			
+			_tf = new TextField(10, 10, "", new TextFormat("Verdana", 22));
+			_tf.touchable = false;
 			_tf.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+			_tf.text = col + ":" + row;
 			addChild(_tf);
 		}
 		
@@ -70,7 +76,7 @@ package views
 			if (_dirty) removeChild(_dirty);
 		}
 		
-		public function updateDebug(col:uint, row:uint):void
+		public function updateDebug(col:int, row:int):void
 		{
 			if (_tf) _tf.text = col + ":" + row;
 		}
